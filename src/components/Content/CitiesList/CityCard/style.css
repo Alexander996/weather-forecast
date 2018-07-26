@@ -1,0 +1,12 @@
+.city-card__wrapper {
+    padding: 10px;
+}
+
+.city-card {
+    display: inline-block;
+    width: 100%;
+    padding: 5px;
+    border-radius: 5px;
+    box-shadow: 0 0 0 0.1rem rgba(0, 123, 255, 0.5);
+    text-align: center;
+}
