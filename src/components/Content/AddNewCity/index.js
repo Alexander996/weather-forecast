@@ -1,8 +1,10 @@
 import React from 'react';
+import {connect} from 'react-redux';
 
-import './style.css'
+import {addCity} from '../../../AC/cities';
+import './style.css';
 
-export default class AddNewCity extends React.Component {
+class AddNewCity extends React.Component {
     state = {
         cityName: ''
     };
@@ -15,13 +17,14 @@ export default class AddNewCity extends React.Component {
                         <input type='text'
                                placeholder='Введите название города'
                                className='form-control'
-                               value={this.state.name}
+                               value={this.state.cityName}
                                onChange={this.changeCityName}/>
                     </div>
                     <div className='col-auto'>
                         <button type='submit'
                                 className='btn btn-primary'
-                                onClick={this.handleSubmit}>Добавить
+                                onClick={this.handleSubmit}
+                        disabled={this.getDisabledState()}>Добавить
                         </button>
                     </div>
                 </div>
@@ -35,5 +38,13 @@ export default class AddNewCity extends React.Component {
 
     handleSubmit = (event) => {
         event.preventDefault();
+        this.props.addCity(this.state.cityName);
+        this.setState({cityName: ''});
+    };
+
+    getDisabledState() {
+        return !this.state.cityName
     }
 }
+
+export default connect(null, {addCity})(AddNewCity)
