@@ -7,3 +7,9 @@ export function arrToMap(arr, DataRecord = OrderedMap) {
 export function mapToArr(obj) {
     return obj.valueSeq().toArray();
 }
+
+export function getTemperature(temp) {
+    temp = Math.round(temp);
+    const sign = temp > 0 ? '+' : '';
+    return `${sign}${temp}\u2103`
+}
