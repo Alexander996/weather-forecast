@@ -1,9 +1,11 @@
 import React from 'react';
+import {connect} from 'react-redux';
 
 import {WEATHER_ICON_URL} from '../../../../consts';
+import {deleteCity} from '../../../../AC/cities';
 import './style.css';
 
-export default class CityCard extends React.Component {
+class CityCard extends React.Component {
     render() {
         const {city} = this.props;
 
@@ -15,6 +17,10 @@ export default class CityCard extends React.Component {
                     <div>Мин. температура: {city.main.temp_min}</div>
                     <div>Макс. температура: {city.main.temp_max}</div>
                     <div>{city.weather[0].description} {this.getWeatherIcon()}</div>
+                    <img src={process.env.PUBLIC_URL + '/delete.png'}
+                         alt='delete'
+                         className='city-card__delete-icon'
+                         onClick={this.handleDeleteCity}/>
                 </div>
             </div>
         )
@@ -25,4 +31,11 @@ export default class CityCard extends React.Component {
         const url = `${WEATHER_ICON_URL}/${city.weather[0].icon}.png`;
         return <img src={url} alt='icon'/>
     }
+
+    handleDeleteCity = () => {
+        const {city, deleteCity} = this.props;
+        deleteCity(city.id)
+    }
 }
+
+export default connect(null, {deleteCity})(CityCard)
