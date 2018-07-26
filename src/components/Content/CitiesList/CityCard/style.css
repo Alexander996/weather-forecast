@@ -14,11 +14,13 @@
 
 .city-card__delete-icon {
     position: absolute;
-    top: 0;
-    right: 0;
+    top: 2px;
+    right: 2px;
+    width: 24px;
+    height: 24px;
 }
 
 .city-card__delete-icon:hover {
     cursor: pointer;
-    transform: scale(1.1, 1.1);
+    transform: scale(1.2, 1.2);
 }

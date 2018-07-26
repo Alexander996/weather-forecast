@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 import {START, SUCCESS, FAIL} from '../consts';
 
 export default store => next => action => {
@@ -8,8 +10,7 @@ export default store => next => action => {
         type: type + START
     });
 
-    fetch(callAPI)
-        .then(res => res.json())
-        .then(response => next({type: type + SUCCESS, response}))
+    axios.get(callAPI)
+        .then(response => next({type: type + SUCCESS, response: response.data}))
         .catch(error => next({type: type + FAIL, error}));
 }
