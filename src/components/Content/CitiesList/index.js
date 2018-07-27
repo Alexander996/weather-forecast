@@ -12,7 +12,7 @@ class CitiesList extends React.Component {
 
         if (!cities.length) return (
             <div>
-                <h5>Вы еще не добавили ни одного города</h5>
+                <h5 className='text-center'>Вы еще не добавили ни одного города</h5>
                 {loader}
             </div>
         );
