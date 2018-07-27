@@ -34,7 +34,7 @@ export default (citiesState = defaultState, action) => {
         case ADD_CITY + FAIL:
         case REFRESH_CITY + FAIL:
             return citiesState.set('isLoading', false)
-                .set('error', error);
+                .set('error', error.message);
 
         case DELETE_CITY:
             return citiesState.deleteIn(['cities', payload.cityId]);

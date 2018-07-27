@@ -2,13 +2,11 @@ import React from 'react';
 import {connect} from 'react-redux';
 
 import {addCity} from '../../../AC/cities';
-import {mapToArr} from '../../../utils';
 import './style.css';
 
 class AddNewCity extends React.Component {
     state = {
-        cityName: '',
-        duplicateCity: false
+        cityName: ''
     };
 
     render() {
@@ -22,7 +20,7 @@ class AddNewCity extends React.Component {
                                value={this.state.cityName}
                                onChange={this.changeCityName}/>
                         <small className="form-text text-danger add-new-city__form__help-text">
-                            {this.getErrorText()}
+                            {this.props.error}
                         </small>
                     </div>
                     <div className='col-auto'>
@@ -41,40 +39,12 @@ class AddNewCity extends React.Component {
         this.setState({cityName: event.target.value})
     };
 
-    getErrorText() {
-        const {duplicateCity} = this.state;
-        if (duplicateCity) return 'Вы уже добавили этот город';
-
-        const {error} = this.props;
-        if (!error) return null;
-        return 'Город не найден'
-    }
-
     handleSubmit = (event) => {
         event.preventDefault();
-        const {cityName} = this.state;
-        const duplicate = this.checkDuplicateCity(cityName);
-        if (duplicate) return;
-
-        this.props.addCity(cityName);
+        this.props.addCity(this.state.cityName);
         this.setState({cityName: ''});
     };
 
-    checkDuplicateCity(cityName) {
-        const {cities} = this.props;
-        for (const city of cities) {
-            if (cityName.toLowerCase() === city.name.toLowerCase()) {
-                this.setState({
-                    duplicateCity: true,
-                    cityName: ''
-                });
-                return true;
-            }
-        }
-
-        this.setState({duplicateCity: false});
-        return false
-    }
 
     getDisabledState() {
         return !this.state.cityName
@@ -82,6 +52,5 @@ class AddNewCity extends React.Component {
 }
 
 export default connect((state) => ({
-    cities: mapToArr(state.cities.cities),
     error: state.cities.error
 }), {addCity})(AddNewCity)
