@@ -2,11 +2,13 @@ import React from 'react';
 import {connect} from 'react-redux';
 
 import {addCity} from '../../../AC/cities';
+import {mapToArr} from '../../../utils';
 import './style.css';
 
 class AddNewCity extends React.Component {
     state = {
-        cityName: ''
+        cityName: '',
+        duplicateCity: false
     };
 
     render() {
@@ -40,6 +42,9 @@ class AddNewCity extends React.Component {
     };
 
     getErrorText() {
+        const {duplicateCity} = this.state;
+        if (duplicateCity) return 'Вы уже добавили этот город';
+
         const {error} = this.props;
         if (!error) return null;
         return 'Город не найден'
@@ -47,9 +52,29 @@ class AddNewCity extends React.Component {
 
     handleSubmit = (event) => {
         event.preventDefault();
-        this.props.addCity(this.state.cityName);
+        const {cityName} = this.state;
+        const duplicate = this.checkDuplicateCity(cityName);
+        if (duplicate) return;
+
+        this.props.addCity(cityName);
         this.setState({cityName: ''});
     };
+
+    checkDuplicateCity(cityName) {
+        const {cities} = this.props;
+        for (const city of cities) {
+            if (cityName.toLowerCase() === city.name.toLowerCase()) {
+                this.setState({
+                    duplicateCity: true,
+                    cityName: ''
+                });
+                return true;
+            }
+        }
+
+        this.setState({duplicateCity: false});
+        return false
+    }
 
     getDisabledState() {
         return !this.state.cityName
@@ -57,5 +82,6 @@ class AddNewCity extends React.Component {
 }
 
 export default connect((state) => ({
+    cities: mapToArr(state.cities.cities),
     error: state.cities.error
 }), {addCity})(AddNewCity)
