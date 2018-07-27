@@ -1,4 +1,4 @@
-import {ADD_CITY, DELETE_CITY, WEATHER_URL, APPID} from '../consts'
+import {ADD_CITY, DELETE_CITY, REFRESH_CITY, WEATHER_URL, APPID} from '../consts'
 
 export function addCity(cityName) {
     return {
@@ -13,5 +13,12 @@ export function deleteCity(cityId) {
         payload: {
             cityId
         }
+    }
+}
+
+export function refreshCity(cityId) {
+    return {
+        type: REFRESH_CITY,
+        callAPI: `${WEATHER_URL}?id=${cityId}&appid=${APPID}&lang=ru&units=metric`
     }
 }

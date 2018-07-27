@@ -1,6 +1,6 @@
 import {Record, OrderedMap} from 'immutable';
 
-import {ADD_CITY, DELETE_CITY, START, SUCCESS, FAIL} from '../consts';
+import {ADD_CITY, DELETE_CITY, REFRESH_CITY, START, SUCCESS, FAIL} from '../consts';
 
 const CityRecord = Record({
     id: undefined,
@@ -22,14 +22,17 @@ export default (citiesState = defaultState, action) => {
 
     switch (type) {
         case ADD_CITY + START:
+        case REFRESH_CITY + START:
             return citiesState.set('isLoading', true)
                 .set('error', null);
 
         case ADD_CITY + SUCCESS:
+        case REFRESH_CITY + SUCCESS:
             return citiesState.setIn(['cities', response.id], new CityRecord(response))
                 .set('isLoading', false);
 
         case ADD_CITY + FAIL:
+        case REFRESH_CITY + FAIL:
             return citiesState.set('isLoading', false)
                 .set('error', error);
 

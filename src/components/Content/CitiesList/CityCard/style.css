@@ -21,7 +21,15 @@
     height: 24px;
 }
 
-.city-card__delete-icon:hover {
+.city-card__refresh-icon {
+    position: absolute;
+    top: 2px;
+    right: 30px;
+    width: 24px;
+    height: 24px;
+}
+
+.city-card__icon_hover:hover {
     cursor: pointer;
     transform: scale(1.2, 1.2);
 }
