@@ -10,7 +10,9 @@ import './style.css';
 
 const cityCardSource = {
     beginDrag(props) {
-        return {}
+        return {
+            cityId: props.city.id
+        }
     }
 };
 

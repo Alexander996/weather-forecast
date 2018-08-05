@@ -1,6 +1,6 @@
 import {Record, OrderedMap} from 'immutable';
 
-import {ADD_CITY, DELETE_CITY, REFRESH_CITY, START, SUCCESS, FAIL} from '../consts';
+import {ADD_CITY, DELETE_CITY, REFRESH_CITY, CHANGE_CITY_POSITION, START, SUCCESS, FAIL} from '../consts';
 
 const CityRecord = Record({
     id: undefined,
@@ -39,7 +39,46 @@ export default (citiesState = defaultState, action) => {
         case DELETE_CITY:
             return citiesState.deleteIn(['cities', payload.cityId]);
 
+        case CHANGE_CITY_POSITION:
+            const {cityIdFrom, cityIdTo, before} = payload;
+            const city = citiesState.getIn(['cities', cityIdFrom]);
+            const cities = citiesState.get('cities');
+
+            let updatedCities;
+            if (before) {
+                updatedCities = insertBefore(cities, cityIdTo, city);
+            }
+            else {
+                updatedCities = insertAfter(cities, cityIdTo, city);
+            }
+            return citiesState.set('cities', updatedCities);
+
         default:
             return citiesState
     }
+}
+
+function insertBefore(map, index, city) {
+    return OrderedMap().withMutations(r => {
+        for (let [k, v] of map.entries()) {
+            if (k === city.id) continue;
+            if (index === k) {
+                r.set(city.id, city);
+            }
+            r.set(k, v)
+        }
+    })
+}
+
+function insertAfter(map, index, city) {
+    return OrderedMap().withMutations(r => {
+        for (let [k, v] of map.entries()) {
+            if (k === city.id) continue;
+            r.set(k, v);
+
+            if (index === k) {
+                r.set(city.id, city);
+            }
+        }
+    })
 }
