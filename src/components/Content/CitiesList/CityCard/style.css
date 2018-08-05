@@ -1,5 +1,6 @@
 .city-card__wrapper {
     padding: 10px;
+    cursor: move;
 }
 
 .city-card {

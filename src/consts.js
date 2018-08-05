@@ -10,3 +10,7 @@ export const FAIL = '_FAIL';
 export const ADD_CITY = 'ADD_CITY';
 export const DELETE_CITY = 'DELETE_CITY';
 export const REFRESH_CITY = 'REFRESH_CITY';
+
+export const ItemTypes = {
+    CITY_CARD: 'CITY_CARD'
+};

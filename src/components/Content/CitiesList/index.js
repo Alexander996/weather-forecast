@@ -1,5 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
+import {DragDropContext} from 'react-dnd';
+import HTML5Backend from 'react-dnd-html5-backend';
 
 import {mapToArr} from '../../../utils';
 import CityCard from './CityCard';
@@ -34,4 +36,4 @@ class CitiesList extends React.Component {
 export default connect((state) => ({
     cities: mapToArr(state.cities.cities),
     isLoading: state.cities.isLoading
-}))(CitiesList)
+}))(DragDropContext(HTML5Backend)(CitiesList))
