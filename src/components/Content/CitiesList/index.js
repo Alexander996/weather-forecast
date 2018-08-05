@@ -4,7 +4,7 @@ import {DragDropContext} from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 
 import {mapToArr} from '../../../utils';
-import CityCard from './CityCard';
+import CityCardWrapper from './CityCardWrapper';
 import Loader from '../../Loader';
 
 class CitiesList extends React.Component {
@@ -20,8 +20,8 @@ class CitiesList extends React.Component {
         );
 
         const citiesCard = cities.map(city => (
-            <CityCard key={city.id}
-                      city={city}/>
+            <CityCardWrapper key={city.id}
+                             city={city}/>
         ));
 
         return (
